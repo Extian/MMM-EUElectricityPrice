@@ -137,7 +137,6 @@ processAndSendData(data, payload) {
 	parsePriceData(data, payload) {
 		console.log('Start dataparse');
 		let ret = [];
-        console.log(`DEBUG Price ${entry.deliveryStart}: ${areaData} ${payload.dataSource} (${payload.currency || 'SEK'})`);
 
 		if (payload.validDataSources.includes(payload.dataSource)) {
 			//console.log('Valid data source', payload.dataSource); // Debugging
@@ -188,6 +187,8 @@ processAndSendData(data, payload) {
 		} else {
 			return { error: "Invalid data source." };
 		}
+		        console.log(`DEBUG Price ${entry.deliveryStart}: ${areaData} ${payload.dataSource} (${payload.currency || 'SEK'})`);
+
 		return ret;
 	},
 
