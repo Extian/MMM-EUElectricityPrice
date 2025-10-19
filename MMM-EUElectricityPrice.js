@@ -264,8 +264,9 @@ Module.register("MMM-EUElectricityPrice", {
 
     for (let i = futureMark; i <= pastMark; i++) {
       const { value, time, date } = this.priceData[i];
-      // data
-      showData.unshift(value / 10);
+       // data
+       showData.unshift(value);
+
       // labels "H:MM" or "HH:MM"
       showLabel.unshift(time[0] === '0' ? time.substring(1,5) : time.substring(0,5));
       // date
