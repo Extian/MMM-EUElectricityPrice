@@ -265,7 +265,7 @@ Module.register("MMM-EUElectricityPrice", {
     for (let i = futureMark; i <= pastMark; i++) {
       const { value, time, date } = this.priceData[i];
       // data
-      showData.unshift(value / 1000);
+      showData.unshift(value / 10);
       // labels "H:MM" or "HH:MM"
       showLabel.unshift(time[0] === '0' ? time.substring(1,5) : time.substring(0,5));
       // date
@@ -462,7 +462,7 @@ Module.register("MMM-EUElectricityPrice", {
     }
 
     // --- Info strip (now, min/max, avg over displayed) ---
-    const currentValue = (this.priceData[currentHourMark].value / 1000).toFixed(2);
+    const currentValue = (this.priceData[currentHourMark].value / 10).toFixed(2);
     const dispAvg = dispData.length ? (dispData.reduce((a,b)=>a+b,0) / dispData.length).toFixed(2) : '--';
 
     // past 24h stats (raw data, regardless of resolution)
