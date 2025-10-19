@@ -203,18 +203,26 @@ Module.register("MMM-EUElectricityPrice", {
     }
 
     // --- Current slot (rounded down to nearest 15 min) ---
+    // --- Current slot using local CET/CEST time (same as helper) ---
     let now = new Date();
     const minutesRounded = Math.floor(now.getMinutes() / 15) * 15;
-    let currentSlot = new Date(
+
+    // Build a Date in local time (no UTC conversion)
+    let localSlot = new Date(
       now.getFullYear(),
       now.getMonth(),
       now.getDate(),
       now.getHours(),
       minutesRounded, 0, 0
     );
-    currentSlot = new Date(currentSlot - currentSlot.getTimezoneOffset() * 60000).toISOString();
-    const currentDate = currentSlot.substring(0,10);
-    const currentTime = currentSlot.substring(11,19); // HH:MM:SS
+
+    // Format date/time just like helper does
+    const currentDate = `${localSlot.getFullYear()}-${("0" + (localSlot.getMonth() + 1)).slice(-2)}-${("0" + localSlot.getDate()).slice(-2)}`;
+    const currentTime = `${("0" + localSlot.getHours()).slice(-2)}:${("0" + localSlot.getMinutes()).slice(-2)}:00`;
+
+    // Debug log
+    console.log("DEBUG frontend local slot:", currentDate, currentTime);
+
 
     let currentHourMark = false;
     for (let i = 0; i < this.priceData.length; i++) {
@@ -264,9 +272,8 @@ Module.register("MMM-EUElectricityPrice", {
 
     for (let i = futureMark; i <= pastMark; i++) {
       const { value, time, date } = this.priceData[i];
-       // data
-       showData.unshift(value);
-
+      // data
+      showData.unshift(value / 1000);
       // labels "H:MM" or "HH:MM"
       showLabel.unshift(time[0] === '0' ? time.substring(1,5) : time.substring(0,5));
       // date
@@ -463,7 +470,7 @@ Module.register("MMM-EUElectricityPrice", {
     }
 
     // --- Info strip (now, min/max, avg over displayed) ---
-    const currentValue = (this.priceData[currentHourMark].value / 10).toFixed(2);
+    const currentValue = (this.priceData[currentHourMark].value / 1000).toFixed(2);
     const dispAvg = dispData.length ? (dispData.reduce((a,b)=>a+b,0) / dispData.length).toFixed(2) : '--';
 
     // past 24h stats (raw data, regardless of resolution)
