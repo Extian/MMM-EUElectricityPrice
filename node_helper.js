@@ -167,9 +167,9 @@ processAndSendData(data, payload) {
 					// Calculate the price with multiplier and offset
 					let price = (areaData * payload.priceMultiplier) + payload.priceOffset;
 
-					// Offset the hours to match the local time
-					let dt = new Date(entry.deliveryStart);
-					dt.setTime(dt.getTime() + payload.hourOffset * 60 * 60 * 1000);
+                    // Convert UTC -> local (CET/CEST handled automatically by system)
+                    let dtUTC = new Date(entry.deliveryStart);
+                    let dt = new Date(dtUTC.getTime() + (dtUTC.getTimezoneOffset() * -60000)););
 
 					// Format the date and time
 					let offsetDate = `${dt.getFullYear()}-${("0" + (dt.getMonth() + 1)).slice(-2)}-${("0" + dt.getDate()).slice(-2)}`;
