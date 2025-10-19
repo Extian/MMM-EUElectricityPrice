@@ -169,7 +169,7 @@ processAndSendData(data, payload) {
 
                     // Convert UTC -> local (CET/CEST handled automatically by system)
                     let dtUTC = new Date(entry.deliveryStart);
-                    let dt = new Date(dtUTC.getTime() + (dtUTC.getTimezoneOffset() * -60000)););
+                    let dt = new Date(dtUTC.getTime() + (dtUTC.getTimezoneOffset() * -60000));
 
 					// Format the date and time
 					let offsetDate = `${dt.getFullYear()}-${("0" + (dt.getMonth() + 1)).slice(-2)}-${("0" + dt.getDate()).slice(-2)}`;
