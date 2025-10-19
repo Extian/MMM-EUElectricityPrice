@@ -183,11 +183,11 @@ processAndSendData(data, payload) {
 					};
 					ret.unshift(retRow);
 				}
+				console.log(`DEBUG Price ${entry.deliveryStart}: ${areaData} ${payload.dataSource} (${payload.currency || 'SEK'})`);
 			}
 		} else {
 			return { error: "Invalid data source." };
 		}
-		        console.log(`DEBUG Price ${entry.deliveryStart}: ${areaData} ${payload.dataSource} (${payload.currency || 'SEK'})`);
 
 		return ret;
 	},
